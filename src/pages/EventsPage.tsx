@@ -24,11 +24,15 @@ export const EventsPage = () => {
     const fetchEvents = async () => {
       const q = query(
         collection(db, 'events'),
-        where('date', '>=', new Date()),
-        orderBy('date', 'asc')
-      );
-
+        orderBy('date', 'asc'), // Must order before filtering
+        // where('date', '>=', new Date())
+      )
+     if(q){
+       console.log("query resolved to true",q)
+      }
       const querySnapshot = await getDocs(q);
+      console.log("querysnapshot for events:", querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })));
+
       const eventsData = querySnapshot.docs.map(doc => ({
         id: doc.id,
         ...doc.data(),

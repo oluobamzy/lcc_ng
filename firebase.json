@@ -11,6 +11,15 @@
         "source": "**",
         "destination": "/index.html"
       }
+    ],
+    "storage": {
+    "cors": [
+      {
+        "origin": ["http://localhost:5173"], 
+        "method": ["GET", "POST", "PUT"],
+        "maxAgeSeconds": 3600
+      }
     ]
+  }
   }
 }
