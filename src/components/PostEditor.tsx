@@ -50,7 +50,7 @@ export const PostEditor: React.FC<PostEditorProps> = ({ postId, onClose, onSave 
           title: post.title,
           content: post.content,
           excerpt: post.excerpt,
-          tags: post.tags.join(', '),
+          tags: post.tags,
           slug: post.slug,
         });
         setFeaturedImage(post.featuredImage || '');
