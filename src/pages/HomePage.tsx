@@ -1,7 +1,19 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Church, Clock, MapPin, ArrowRight, Calendar, Heart } from 'lucide-react';
 //All components use the brand colors (#006297, #BAD975, #FFFFFF) consistently throughout the interface.
 export const HomePage = () => {
+  const navigate = useNavigate(); // React Router hook to programmatically navigate
+
+  const handleJoinUsClick = () => {
+    console.log('Join Us clicked!');
+    navigate('/events'); // Navigate to the /events route
+  };
+
+  const handleExplore = () => {
+    console.log('Explore clicked!');
+    navigate('/about'); // Navigate to the /about route
+  };
   return (
     <div className="min-h-screen bg-white">
       {/* Navigation */}
@@ -31,11 +43,11 @@ export const HomePage = () => {
               <h1 className="text-5xl font-bold leading-tight mb-6">Welcome to Your Spiritual Home</h1>
               <p className="text-xl mb-8">Join us in worship and experience the transformative power of community and faith.</p>
               <div className="flex space-x-4">
-                <button className="bg-[#BAD975] text-[#006297] px-8 py-3 rounded-lg font-semibold hover:bg-opacity-90 transition-colors flex items-center">
+                <button className="bg-[#BAD975] text-[#006297] px-8 py-3 rounded-lg font-semibold hover:bg-opacity-90 transition-colors flex items-center" onClick={handleJoinUsClick}>
                   Join Us Sunday <ArrowRight className="ml-2 w-5 h-5" />
                 </button>
-                <button className="border-2 border-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-[#006297] transition-colors">
-                  Watch Online
+                <button className="border-2 border-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-[#006297] transition-colors" onClick={handleExplore}>
+                  Explore
                 </button>
               </div>
             </div>

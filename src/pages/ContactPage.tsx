@@ -16,21 +16,21 @@ export const ContactPage = () => {
                   <MapPin className="w-6 h-6 text-[#006297]" />
                   <div>
                     <h3 className="font-medium">Address</h3>
-                    <p className="text-gray-600">123 Faith Street, City, State 12345</p>
+                    <p className="text-gray-600">Osogbo, Osun, State</p>
                   </div>
                 </div>
                 <div className="flex items-center space-x-4">
                   <Phone className="w-6 h-6 text-[#006297]" />
                   <div>
                     <h3 className="font-medium">Phone</h3>
-                    <p className="text-gray-600">(555) 123-4567</p>
+                    <p className="text-gray-600">(234) 803-859-3965</p>
                   </div>
                 </div>
                 <div className="flex items-center space-x-4">
                   <Mail className="w-6 h-6 text-[#006297]" />
                   <div>
                     <h3 className="font-medium">Email</h3>
-                    <p className="text-gray-600">info@lifestreamcc.org</p>
+                    <p className="text-gray-600">bunmiakinyosolaministries@gmail.com</p>
                   </div>
                 </div>
                 <div className="flex items-center space-x-4">
@@ -38,7 +38,7 @@ export const ContactPage = () => {
                   <div>
                     <h3 className="font-medium">Service Times</h3>
                     <p className="text-gray-600">Sundays: 9:00 AM & 11:00 AM</p>
-                    <p className="text-gray-600">Wednesdays: 7:00 PM</p>
+                    <p className="text-gray-600">Wednesdays: 5:00 PM</p>
                   </div>
                 </div>
               </div>
