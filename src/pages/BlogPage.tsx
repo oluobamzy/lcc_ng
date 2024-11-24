@@ -14,8 +14,8 @@ export const BlogPage = () => {
     const fetchPosts = async () => {
       const q = query(
         collection(db, 'posts'),
-        where('published', '==', true),
-        orderBy('createdAt', 'desc')
+        orderBy('createdAt', 'desc'),
+        // where('published', '==', true)
       );
 
       const querySnapshot = await getDocs(q);
