@@ -1,11 +1,12 @@
 import React from 'react';
-import { Church, Users, Heart, Book } from 'lucide-react';
+import { Church, Users, Heart, Book, Home } from 'lucide-react';
 
 export const AboutPage = () => {
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <h1 className="text-4xl font-bold text-[#006297] mb-8">About Us</h1>
+        {/* <Home className="w-8 h-8 text-[#006297]" /> */}
 
         <div className="grid md:grid-cols-2 gap-12 items-center mb-16">
           <div>

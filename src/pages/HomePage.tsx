@@ -1,69 +1,63 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Church, Clock, MapPin, ArrowRight, Calendar, Heart } from 'lucide-react';
-//All components use the brand colors (#006297, #BAD975, #FFFFFF) consistently throughout the interface.
-export const HomePage = () => {
-  const navigate = useNavigate(); // React Router hook to programmatically navigate
+import { Hero } from '../components/Hero/Hero';
+import { Gallery } from '../components/Gallery/Gallery';
+import { CallToAction } from '../components/CallToAction';
+import { MediaItem } from '../components/Gallery/types';
 
-  const handleJoinUsClick = () => {
-    console.log('Join Us clicked!');
-    navigate('/events'); // Navigate to the /events route
-  };
+const sampleMedia: MediaItem[] = [
+  {
+    id: '1',
+    type: 'image',
+    url: 'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?auto=format&fit=crop&q=80&w=800',
+    title: 'Music Festival',
+    description: 'Live performance at sunset'
+  },
+  {
+    id: '2',
+    type: 'video',
+    url: 'https://test-videos.co.uk/vids/bigbuckbunny/mp4/h264/720/Big_Buck_Bunny_720_10s_1MB.mp4',
+    thumbnail: 'https://images.unsplash.com/photo-1516280440614-37939bbacd81?auto=format&fit=crop&q=80&w=800',
+    title: 'Nature Documentary',
+    description: 'Beautiful scenes from nature'
+  },
+  {
+    id: '3',
+    type: 'image',
+    url: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&q=80&w=800',
+    title: 'Concert Lights',
+    description: 'Amazing light show during the concert'
+  }
+];
 
-  const handleExplore = () => {
-    console.log('Explore clicked!');
-    navigate('/about'); // Navigate to the /about route
-  };
+export function HomePage() {
+  const navigate = useNavigate();
+
+  const handleJoinUsClick = () => navigate('/events');
+  const handleExploreClick = () => navigate('/about');
+
   return (
     <div className="min-h-screen bg-white">
-      {/* Navigation */}
-      <nav className="bg-[#006297] text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-20">
-            <div className="flex items-center space-x-2">
-              <Church className="w-8 h-8" />
-              <span className="text-xl font-bold">Lifestream</span>
-            </div>
-            <div className="hidden md:flex space-x-8">
-              <a href="/" className="hover:text-[#BAD975] transition-colors">Home</a>
-              <a href="/about" className="hover:text-[#BAD975] transition-colors">About</a>
-              <a href="#" className="hover:text-[#BAD975] transition-colors">Services</a>
-              <a href="events" className="hover:text-[#BAD975] transition-colors">Events</a>
-              <a href="contact" className="hover:text-[#BAD975] transition-colors">Contact</a>
-            </div>
-          </div>
+      <Hero 
+        onJoinUsClick={handleJoinUsClick}
+        onExploreClick={handleExploreClick}
+      />
+      
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <h2 className="text-4xl font-bold text-center mb-12 text-[#006297]">
+          Latest Media
+        </h2>
+        <Gallery items={sampleMedia} columns={3} />
+        
+        <div className="mt-16">
+          <CallToAction
+            title="Join Us This Sunday"
+            description="Experience the warmth of our community"
+            buttonText="Plan Your Visit"
+            onButtonClick={handleJoinUsClick}
+          />
         </div>
-      </nav>
-
-      {/* Hero Section */}
-      <div className="relative bg-[#006297] text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
-          <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div>
-              <h1 className="text-5xl font-bold leading-tight mb-6">Welcome to Your Spiritual Home</h1>
-              <p className="text-xl mb-8">Join us in worship and experience the transformative power of community and faith.</p>
-              <div className="flex space-x-4">
-                <button className="bg-[#BAD975] text-[#006297] px-8 py-3 rounded-lg font-semibold hover:bg-opacity-90 transition-colors flex items-center" onClick={handleJoinUsClick}>
-                  Join Us Sunday <ArrowRight className="ml-2 w-5 h-5" />
-                </button>
-                <button className="border-2 border-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-[#006297] transition-colors" onClick={handleExplore}>
-                  Explore
-                </button>
-              </div>
-            </div>
-            <div className="hidden md:block">
-              <img 
-                src="https://images.unsplash.com/photo-1438232992991-995b7058bbb3?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" 
-                alt="Church community" 
-                className="rounded-lg shadow-xl"
-              />
-            </div>
-          </div>
-        </div>
-        <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-white to-transparent"></div>
       </div>
-
-      {/* Rest of the components... */}
     </div>
   );
-};
+}

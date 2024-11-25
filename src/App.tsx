@@ -1,5 +1,5 @@
 import React from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, BrowserRouter } from 'react-router-dom';
 import { AdminLayout } from './components/AdminLayout';
 import { LoginForm } from './components/LoginForm';
 import { HomePage } from './pages/HomePage';
@@ -13,9 +13,13 @@ import { AdminPosts } from './pages/admin/AdminPosts';
 import { AdminMedia } from './pages/admin/AdminMedia';
 import { AdminSettings } from './pages/admin/AdminSettings';
 import { AdminEvents } from './pages/admin/AdminEvents';
+import { MainNav } from './components/Navigation/MainNav';
 
 function App() {
   return (
+    
+    <div className="min-h-screen bg-gray-50">
+    <MainNav />
     <Routes>
       <Route path="/" element={<HomePage />} />
       <Route path="/blog" element={<BlogPage />} />
@@ -33,6 +37,8 @@ function App() {
         <Route path="settings" element={<AdminSettings />} />
       </Route>
     </Routes>
+    </div>
+    
   );
 }
 
