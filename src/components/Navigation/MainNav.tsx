@@ -5,7 +5,7 @@ import { Church } from 'lucide-react';
 const navItems = [
   { path: '/', label: 'Home' },
   { path: '/about', label: 'About' },
-  { path: '/services', label: 'Services' },
+  { path: '/admin/login', label: 'Portal' },
   { path: '/events', label: 'Events' },
   { path: '/contact', label: 'Contact' },
   {path: '/blog', label: 'Blog'}

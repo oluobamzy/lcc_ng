@@ -14,6 +14,7 @@ import { AdminMedia } from './pages/admin/AdminMedia';
 import { AdminSettings } from './pages/admin/AdminSettings';
 import { AdminEvents } from './pages/admin/AdminEvents';
 import { MainNav } from './components/Navigation/MainNav';
+import NotFoundPage from './pages/NotFoundPage';
 
 function App() {
   return (
@@ -36,6 +37,8 @@ function App() {
         <Route path="events" element={<AdminEvents />} />
         <Route path="settings" element={<AdminSettings />} />
       </Route>
+      {/* Catch-all route for 404 - Not Found */}
+      <Route path="*" element={<NotFoundPage />} />
     </Routes>
     </div>
     
