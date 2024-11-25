@@ -54,11 +54,14 @@ export function Navbar({ logoUrl, logoAlt }: NavbarProps) {
         </div>
 
         {/* Mobile Navigation */}
-        <div className={`md:hidden transition-all duration-300 ease-in-out ${
-          isMobileMenuOpen 
-            ? 'max-h-96 opacity-100 mt-4' 
-            : 'max-h-0 opacity-0 overflow-hidden'
-        }`}>
+        <div 
+          className={`md:hidden transition-all duration-300 ease-in-out 
+            ${isMobileMenuOpen ? 'max-h-screen opacity-100 mt-4' : 'max-h-0 opacity-0 overflow-hidden'}
+          `}
+          style={{
+            transition: 'max-height 0.3s ease-in-out, opacity 0.3s ease-in-out'
+          }}
+        >
           <div className="flex flex-col space-y-3 pb-4">
             <NavLink href="/" isActive>Home</NavLink>
             <NavLink href="/about">About</NavLink>
