@@ -1,0 +1,26 @@
+[
+  {
+    "origin": [
+      "http://localhost:5173", 
+      "http://localhost:3000", 
+      "https://lccinternational.org",
+      "*"
+    ],
+    "method": ["GET", "PUT", "POST", "DELETE", "HEAD", "OPTIONS"],
+    "maxAgeSeconds": 3600,
+    "responseHeader": [
+      "Content-Type", 
+      "Content-Length",
+      "Content-Disposition",
+      "Content-Encoding",
+      "Content-Range",
+      "Content-Location",
+      "Cache-Control",
+      "Authorization",
+      "Access-Control-Allow-Origin",
+      "X-Requested-With",
+      "Firebase-Storage-Resumable-Upload-Protocol", 
+      "X-Firebase-Auth-Token"
+    ]
+  }
+]

@@ -1,7 +1,9 @@
-import React from 'react';
+
 import { useForm } from 'react-hook-form';
 import { doc, setDoc, getDoc } from 'firebase/firestore';
 import { db } from '../../lib/firebase';
+import { useAuth } from '../../contexts/AuthContext';
+import { useState, useEffect } from 'react';
 
 interface SettingsForm {
   churchName: string;
@@ -16,15 +18,77 @@ interface SettingsForm {
 }
 
 export const AdminSettings = () => {
-  const { register, handleSubmit, formState: { errors } } = useForm<SettingsForm>();
+  const { register, handleSubmit, setValue } = useForm<SettingsForm>();
+  const { user } = useAuth();
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [saveSuccess, setSaveSuccess] = useState(false);
+
+  useEffect(() => {
+    const loadSettings = async () => {
+      if (!user) return;
+      
+      setLoading(true);
+      setError(null);
+      
+      try {
+        const settingsRef = doc(db, 'settings', 'general');
+        const settingsDoc = await getDoc(settingsRef);
+        
+        if (settingsDoc.exists()) {
+          const data = settingsDoc.data() as SettingsForm;
+          
+          // Set form values
+          setValue('churchName', data.churchName || '');
+          setValue('address', data.address || '');
+          setValue('phone', data.phone || '');
+          setValue('email', data.email || '');
+          setValue('socialMedia.facebook', data.socialMedia?.facebook || '');
+          setValue('socialMedia.instagram', data.socialMedia?.instagram || '');
+          setValue('socialMedia.youtube', data.socialMedia?.youtube || '');
+        } else {
+          // If the document doesn't exist yet, we'll use empty values
+          // This happens when settings are accessed for the first time
+          console.log('Settings document does not exist yet. Will be created on save.');
+        }
+      } catch (err: any) {
+        console.error('Error loading settings:', err);
+        
+        if (err.code === 'permission-denied') {
+          setError('Permission denied: You don\'t have access to settings. Please check Firestore rules.');
+        } else {
+          setError('Failed to load settings: ' + err.message);
+        }
+      } finally {
+        setLoading(false);
+      }
+    };
+    
+    loadSettings();
+  }, [user, setValue]);
 
   const onSubmit = async (data: SettingsForm) => {
+    if (!user) return;
+    
+    setError(null);
+    setSaveSuccess(false);
+    setLoading(true);
+    
     try {
-      await setDoc(doc(db, 'settings', 'general'), data);
-      alert('Settings saved successfully!');
-    } catch (error) {
-      console.error('Error saving settings:', error);
-      alert('Failed to save settings');
+      // Make sure we create the document if it doesn't exist (use merge option)
+      await setDoc(doc(db, 'settings', 'general'), data, { merge: true });
+      setSaveSuccess(true);
+      setTimeout(() => setSaveSuccess(false), 3000); // Hide success message after 3 seconds
+    } catch (err: any) {
+      console.error('Error saving settings:', err);
+      
+      if (err.code === 'permission-denied') {
+        setError('Permission denied: You don\'t have access to save settings. Please check Firestore rules.');
+      } else {
+        setError('Failed to save settings: ' + err.message);
+      }
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -32,8 +96,25 @@ export const AdminSettings = () => {
     <div>
       <h1 className="text-2xl font-bold text-[#006297] mb-6">Settings</h1>
       
-      <div className="bg-white rounded-lg shadow p-6">
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+      {loading ? (
+        <div className="flex justify-center my-12">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#006297]"></div>
+        </div>
+      ) : (
+        <div className="bg-white rounded-lg shadow p-6">
+          {error && (
+            <div className="mb-6 p-4 bg-red-50 text-red-600 rounded-lg">
+              <p>{error}</p>
+            </div>
+          )}
+          
+          {saveSuccess && (
+            <div className="mb-6 p-4 bg-green-50 text-green-600 rounded-lg">
+              <p>Settings saved successfully!</p>
+            </div>
+          )}
+          
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
           <div>
             <label className="block text-sm font-medium text-gray-700">Church Name</label>
             <input
@@ -113,6 +194,7 @@ export const AdminSettings = () => {
           </div>
         </form>
       </div>
+      )}
     </div>
   );
 };

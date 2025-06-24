@@ -6,15 +6,38 @@ import { HeroEnhanced } from '../components/Hero/HeroEnhanced';
 import { Gallery } from '../components/Gallery/Gallery';
 import { CallToAction } from '../components/CallToAction';
 import { MediaItem } from '../components/Gallery/types';
-import { ArrowRight, Calendar, ChevronRight, ChevronDown, Clock, Loader, MapPin, Play } from 'lucide-react';
-import { getBunmiAkinyosolaVideos } from '../utils/youtube-utils';
-import { FeaturedYouTubeVideo } from '../components/LiveStreamEnhanced/FeaturedYouTubeVideo';
+import { ArrowRight, Calendar, ChevronRight, Clock, MapPin, Play } from 'lucide-react';
 
 // Animation variants
 const fadeIn = {
   hidden: { opacity: 0, y: 20 },
   visible: { opacity: 1, y: 0 }
 };
+
+const sampleMedia: MediaItem[] = [
+  {
+    id: '1',
+    type: 'image',
+    url: 'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?auto=format&fit=crop&q=80&w=800',
+    title: 'Sunday Service',
+    description: 'Worship together as a community'
+  },
+  {
+    id: '2',
+    type: 'video',
+    url: 'https://test-videos.co.uk/vids/bigbuckbunny/mp4/h264/720/Big_Buck_Bunny_720_10s_1MB.mp4',
+    thumbnail: 'https://images.unsplash.com/photo-1516280440614-37939bbacd81?auto=format&fit=crop&q=80&w=800',
+    title: 'Latest Sermon',
+    description: 'Finding Peace in Troubled Times'
+  },
+  {
+    id: '3',
+    type: 'image',
+    url: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&q=80&w=800',
+    title: 'Youth Conference',
+    description: 'Building the next generation of leaders'
+  }
+];
 
 // Sample upcoming events for homepage
 const upcomingEvents = [
@@ -167,47 +190,14 @@ const AnimatedSection: React.FC<AnimatedSectionProps> = ({ children, delay = 0 }
 
 export function HomePage() {
   const navigate = useNavigate();
-  // Animation controls
-  const statsControls = useAnimation();
-  const statsRef = useRef<HTMLDivElement>(null);
-  
-  // State for YouTube videos from Bunmi Akinyosola Ministries
-  const [channelVideos, setChannelVideos] = useState<MediaItem[]>([]);
-  const [isLoadingVideos, setIsLoadingVideos] = useState(true);
-  
-  // State to manage the number of videos displayed
-  const [visibleVideos, setVisibleVideos] = useState(4);
 
-  // Fetch videos on component mount
-  useEffect(() => {
-    const fetchVideos = async () => {
-      try {
-        setIsLoadingVideos(true);
-        const videos = await getBunmiAkinyosolaVideos();
-        setChannelVideos(videos);
-      } catch (error) {
-        console.error('Error fetching videos:', error);
-      } finally {
-        setIsLoadingVideos(false);
-      }
-    };
-    
-    fetchVideos();
-  }, []);
-  
-  // Only using YouTube videos from the channel
-  const sampleMedia: MediaItem[] = channelVideos;
-
-  // Load more videos handler
-  const handleLoadMoreVideos = () => {
-    setVisibleVideos(channelVideos.length);
-  };
-  
-  // Stats animations are handled when the section comes into view
-  
   const handleJoinUsClick = () => navigate('/events');
   const handleExploreClick = () => navigate('/about');
   const handleLiveStreamClick = () => navigate('/live');
+  
+  const statsControls = useAnimation();
+  // Create a specific ref for stats section
+  const statsRef = useRef<HTMLDivElement>(null);
   // TypeScript fix: use destructuring for useInView
   const { ref: refStatsInView, inView: statsInView } = useInView({
     triggerOnce: true,
@@ -423,45 +413,8 @@ export function HomePage() {
               </div>
             </AnimatedSection>
             
-            <AnimatedSection delay={0.1}>
-              {channelVideos.length > 0 ? (
-                <FeaturedYouTubeVideo video={channelVideos[0]} height="40%" />
-              ) : (
-                <div className="aspect-video bg-gray-100 flex items-center justify-center rounded-lg">
-                  <div className="text-center">
-                    <Loader className="w-10 h-10 text-[#006297] animate-spin mx-auto mb-4" />
-                    <p className="text-gray-600">Loading featured video...</p>
-                  </div>
-                </div>
-              )}
-            </AnimatedSection>
-            
             <AnimatedSection delay={0.2}>
-              {isLoadingVideos ? (
-                <div className="py-10 text-center">
-                  <Loader className="w-10 h-10 text-[#006297] animate-spin mx-auto mb-4" />
-                  <p className="text-gray-600">Loading videos from Bunmi Akinyosola Ministries...</p>
-                </div>
-              ) : (
-                <div>
-                  <Gallery items={sampleMedia.slice(0, visibleVideos)} columns={4} smallCards={true} />
-                  
-                  {/* Load More Button - only show if there are more videos to load */}
-                  {visibleVideos < sampleMedia.length && (
-                    <div className="mt-8 text-center">
-                      <motion.button
-                        onClick={handleLoadMoreVideos}
-                        className="bg-[#006297] text-white px-6 py-3 rounded-lg font-medium inline-flex items-center"
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
-                      >
-                        Load More
-                        <ChevronDown className="ml-2 w-5 h-5" />
-                      </motion.button>
-                    </div>
-                  )}
-                </div>
-              )}
+              <Gallery items={sampleMedia} columns={3} />
             </AnimatedSection>
           </div>
         </section>

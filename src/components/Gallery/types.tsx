@@ -7,4 +7,7 @@ export interface MediaItem {
   thumbnail?: string;
   title: string;
   description?: string;
+  tags?: string[];
+  uploadedAt?: Date | string;
+  size?: number;
 }

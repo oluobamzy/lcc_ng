@@ -1,7 +1,10 @@
-import React from 'react';
-import { Church, Users, Heart, Book, Home } from 'lucide-react';
+import { useState } from 'react';
+import { Church, Users, Heart, Book } from 'lucide-react';
+import { LocationMap } from '../components/Map/LocationMap';
 
 export const AboutPage = () => {
+  const [showMap, setShowMap] = useState(false);
+
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -71,11 +74,16 @@ export const AboutPage = () => {
         <div className="bg-[#006297] text-white rounded-lg p-8 text-center">
           <h2 className="text-3xl font-semibold mb-4">Join Us This Sunday</h2>
           <p className="text-xl mb-6">Experience the warmth of our community</p>
-          <button className="bg-[#BAD975] text-[#006297] px-8 py-3 rounded-lg font-semibold hover:bg-opacity-90 transition-colors">
+          <button
+            className="bg-[#BAD975] text-[#006297] px-8 py-3 rounded-lg font-semibold hover:bg-opacity-90 transition-colors"
+            onClick={() => setShowMap(true)}
+          >
             Plan Your Visit
           </button>
         </div>
       </div>
+
+      <LocationMap isOpen={showMap} onClose={() => setShowMap(false)} />
     </div>
   );
 };

@@ -1,0 +1,29 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Allow read/write access to all documents for any authenticated user
+    match /{document=**} {
+      allow read, write: if request.auth != null;
+    }
+    
+    // Settings collection: allow all authenticated users to read and write
+    match /settings/{document=**} {
+      allow read, write: if request.auth != null;
+    }
+    
+    // Media collection: allow all authenticated users to read and write
+    match /media/{document=**} {
+      allow read, write: if request.auth != null;
+    }
+    
+    // Posts collection: allow all authenticated users to read and write
+    match /posts/{document=**} {
+      allow read, write: if request.auth != null;
+    }
+    
+    // Events collection: allow all authenticated users to read and write
+    match /events/{document=**} {
+      allow read, write: if request.auth != null;
+    }
+  }
+}
