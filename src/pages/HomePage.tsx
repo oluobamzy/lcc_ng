@@ -46,23 +46,23 @@ const upcomingEvents = [
 
 // Mission statement and values data
 const missionData = {
-  mission: "To build a vibrant community of believers who experience God's presence, connect in meaningful relationships, and serve the world with love.",
+  mission: "Our mission is to bring men and women to the saving knowledge of Christ and the membership of the local church. Raising churches in every tribe, language, and nations Ultimately Raising Disciples for our our Lord Jesus",
   values: [
     {
-      title: "Authentic Worship",
-      description: "We create spaces for genuine encounters with God."
+      title: "Our Vision",
+      description: "To be a beacon of hope and transformation, reaching people with God's love and helping them become uncompromising and devoted followers of Christ."
     },
     {
-      title: "Inclusive Community",
-      description: "We welcome all people regardless of background or journey."
+      title: "Our Values",
+      description: "We value an atmosphere of faith, love, excellence, purpose, and accountability."
     },
     {
-      title: "Transformative Teaching",
-      description: "We present Biblical truth that inspires positive life change."
+      title: "Our Community",
+      description: "We are a diverse family of believers, united by our love for God and dedicated to serving Him and making a positive impact in our community."
     },
     {
-      title: "Compassionate Service",
-      description: "We demonstrate God's love through practical action."
+      title: "Our Foundation",
+      description: "Built on worship, community, service, and learning - the four pillars that guide our ministry and fellowship."
     }
   ]
 };
@@ -255,14 +255,14 @@ export function HomePage() {
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
               {missionData.values.map((value, index) => (
                 <AnimatedSection key={index} delay={index * 0.2}>
-                  <div className="bg-white rounded-lg p-6 shadow-md hover:shadow-lg transition-all">
+                  <div className="bg-white rounded-lg p-6 shadow-md hover:shadow-lg transition-all h-full flex flex-col">
                     <div className="w-12 h-12 bg-[#006297]/10 rounded-full flex items-center justify-center mb-4">
                       <div className="w-8 h-8 bg-[#006297] rounded-full flex items-center justify-center text-white font-bold">
                         {index + 1}
                       </div>
                     </div>
                     <h3 className="text-xl font-bold text-[#006297] mb-2">{value.title}</h3>
-                    <p className="text-gray-600">{value.description}</p>
+                    <p className="text-gray-600 flex-grow">{value.description}</p>
                   </div>
                 </AnimatedSection>
               ))}

@@ -1,22 +1,27 @@
 /**
  * Firebase Cloud Functions for LCC International
  * 
- * This     // Configure Nodemailer transporter
-    const transporter = nodemailer.createTransport({
-      service: 'gmail',
-      auth: {
-        user: 'bunmiakinyosolaministries@gmail.com',
-        pass: functions.config().email.password, // Use the config value
-      },
-    });tains Cloud Functions for:
+ * This file contains Cloud Functions for:
  * - Contact form email handling
- * - Health check endpoint
+ * - Additional church management functions
  */
 
 import {onRequest} from 'firebase-functions/v2/https';
+import {setGlobalOptions} from 'firebase-functions/v2';
 import * as logger from 'firebase-functions/logger';
 import * as nodemailer from 'nodemailer';
-import * as functions from 'firebase-functions';
+
+// Set global options
+setGlobalOptions({maxInstances: 10});
+
+// Configure Nodemailer transporter
+const transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: process.env.EMAIL_USER || 'bunmiakinyosolaministries@gmail.com',
+    pass: process.env.EMAIL_PASSWORD || '', // This will need to be set via Firebase environment config
+  },
+});
 
 // Interface for contact form data
 interface ContactFormData {
@@ -30,10 +35,12 @@ interface ContactFormData {
  * Cloud Function to handle contact form submissions
  * Receives form data and sends email to church administrators
  */
-export const sendEmail = onRequest({
-  cors: true,
-  region: 'us-central1',
-}, async (req, res) => {
+export const sendEmail = onRequest(async (req, res) => {
+  // Set CORS headers
+  res.set('Access-Control-Allow-Origin', '*');
+  res.set('Access-Control-Allow-Methods', 'GET, POST');
+  res.set('Access-Control-Allow-Headers', 'Content-Type');
+
   // Handle preflight OPTIONS request
   if (req.method === 'OPTIONS') {
     res.status(204).send('');
@@ -71,15 +78,6 @@ export const sendEmail = onRequest({
       return;
     }
 
-    // Configure Nodemailer transporter
-    const transporter = nodemailer.createTransport({
-      service: 'gmail',
-      auth: {
-        user: 'bunmiakinyosolaministries@gmail.com',
-        pass: functions.config().email.password, // Use the config value
-      },
-    });
-
     // Define the email options for church administrators
     const mailOptions = {
       from: email,
@@ -92,8 +90,6 @@ export const sendEmail = onRequest({
         <p><strong>Subject:</strong> ${subject}</p>
         <p><strong>Message:</strong></p>
         <p>${message.replace(/\n/g, '<br>')}</p>
-        <hr>
-        <p><em>This message was sent from the LCC International website contact form.</em></p>
       `,
       text: `
         New Contact Form Submission
@@ -104,51 +100,29 @@ export const sendEmail = onRequest({
         
         Message:
         ${message}
-        
-        ---
-        This message was sent from the LCC International website contact form.
       `
     };
 
-    try {
-      // Send the email
-      await transporter.sendMail(mailOptions);
-      
-      logger.info('Contact form email sent successfully', {
-        senderEmail: email,
-        senderName: name,
-        subject: subject,
-        timestamp: new Date().toISOString()
-      });
+    // Send the email
+    await transporter.sendMail(mailOptions);
 
-      res.status(200).json({ 
-        success: true,
-        message: 'Your message has been sent successfully! We will get back to you soon.'
-      });
-    } catch (emailError) {
-      logger.error('Error sending email:', emailError);
-      
-      // Log the submission even if email fails
-      logger.info('Contact form submission logged (email failed)', {
-        senderEmail: email,
-        senderName: name,
-        subject: subject,
-        message: message,
-        timestamp: new Date().toISOString()
-      });
+    logger.info('Contact form email sent successfully', {
+      senderEmail: email,
+      senderName: name,
+      subject: subject
+    });
 
-      res.status(200).json({ 
-        success: true,
-        message: 'Your message has been received and logged! We will get back to you soon.'
-      });
-    }
+    res.status(200).json({ 
+      success: true,
+      message: 'Your message has been sent successfully! We will get back to you soon.'
+    });
 
   } catch (error: any) {
-    logger.error('Error processing contact form submission:', error);
+    logger.error('Error sending contact form email:', error);
     
     res.status(500).json({ 
       success: false,
-      message: 'Sorry, there was an error processing your message. Please try again later.'
+      message: 'Sorry, there was an error sending your message. Please try again later.'
     });
   }
 });
@@ -156,14 +130,10 @@ export const sendEmail = onRequest({
 /**
  * Health check endpoint for monitoring
  */
-export const healthCheck = onRequest({
-  cors: true,
-  region: 'us-central1',
-}, (req, res) => {
+export const healthCheck = onRequest((req, res) => {
   res.status(200).json({
     status: 'healthy',
     timestamp: new Date().toISOString(),
-    service: 'LCC International Cloud Functions',
-    version: '2.0'
+    service: 'LCC International Cloud Functions'
   });
 });

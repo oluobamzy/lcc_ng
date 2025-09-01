@@ -14,3 +14,8 @@ createRoot(document.getElementById('root')!).render(
     </BrowserRouter>
   </StrictMode>
 );
+
+// Enable HMR in development
+if (import.meta.hot) {
+  import.meta.hot.accept();
+}

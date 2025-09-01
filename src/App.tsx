@@ -10,12 +10,14 @@ import { SingleEventPage } from './pages/SingleEventPage';
 import { AboutPage } from './pages/AboutPage';
 import { ContactPage } from './pages/ContactPage';
 import { MediaPage } from './pages/MediaPage';
+import { TeamPage } from './pages/TeamPage';
 import { UnauthorizedPage } from './pages/UnauthorizedPage';
 import { LiveStreamPageEnhanced } from './components/LiveStreamEnhanced/LiveStreamPageEnhanced';
 import { AdminPosts } from './pages/admin/AdminPosts';
 import  AdminMediaEnhanced  from './pages/admin/AdminMediaEnhanced';
 import { AdminSettings } from './pages/admin/AdminSettings';
 import { AdminEvents } from './pages/admin/AdminEvents';
+import { AdminTeam } from './pages/admin/AdminTeam';
 import { MainNav } from './components/Navigation/MainNav';
 import NotFoundPage from './pages/NotFoundPage';
 
@@ -31,6 +33,7 @@ function App() {
       <Route path="/events" element={<EventsPage />} />
       <Route path="/events/:slug" element={<SingleEventPage />} />        <Route path="/live" element={<LiveStreamPageEnhanced />} />
       <Route path="/about" element={<AboutPage />} />
+      <Route path="/team" element={<TeamPage />} />
       <Route path="/media" element={<MediaPage />} />
       <Route path="/contact" element={<ContactPage />} />
       <Route path="/admin/login" element={<LoginForm />} />
@@ -46,6 +49,7 @@ function App() {
         <Route path="posts" element={<AdminPosts />} />
         <Route path="media" element={<AdminMediaEnhanced />} />
         <Route path="events" element={<AdminEvents />} />
+        <Route path="team" element={<AdminTeam />} />
         <Route path="settings" element={<AdminSettings />} />
       </Route>
       

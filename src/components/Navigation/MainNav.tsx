@@ -1,11 +1,13 @@
 import { useState, useEffect } from 'react';
 import { NavLink as RouterLink, useLocation } from 'react-router-dom';
-import { Church, Menu, X, CalendarDays, BookOpen, Tv, Phone, Home, Info } from 'lucide-react';
+import { Church, Menu, X, CalendarDays, BookOpen, Tv, Phone, Home, Info, Users } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import lccLogo from '../../../public/assets/lcc.jpg';
 
 const navItems = [
   { path: '/', label: 'Home', icon: Home },
   { path: '/about', label: 'About', icon: Info },
+  { path: '/team', label: 'Team', icon: Users },
   { path: '/events', label: 'Events', icon: CalendarDays },
   { path: '/blog', label: 'Blog', icon: BookOpen },
   { path: '/live', label: 'Live Stream', icon: Tv },
@@ -47,10 +49,10 @@ export function MainNav() {
             transition={{ type: "spring", stiffness: 400, damping: 10 }}
           >
             <RouterLink to="/" className="flex items-center space-x-2 group">
-              <Church className="w-8 h-8 group-hover:text-[#BAD975] transition-colors" />
-              
+              <img src={lccLogo} alt="Logo" className="w-32 h-14 group-hover:text-[#BAD975] transition-colors" />
+
               <span className="text-xl font-bold group-hover:text-[#BAD975] transition-colors">
-                Lifestream
+                {/* Lifestream */}
               </span>
             </RouterLink>
           </motion.div>

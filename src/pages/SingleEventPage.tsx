@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { collection, query, where, getDocs } from 'firebase/firestore';
 import { db } from '../lib/firebase';
@@ -33,11 +33,11 @@ export const SingleEventPage = () => {
 
       const querySnapshot = await getDocs(q);
       if (!querySnapshot.empty) {
-        const eventData = querySnapshot.docs[0].data() as Event;
+        const eventData = querySnapshot.docs[0].data() as any;
         setEvent({
           ...eventData,
           id: querySnapshot.docs[0].id,
-          date: eventData.date.toDate(),
+          date: eventData.date?.toDate ? eventData.date.toDate() : eventData.date,
         });
       }
       setLoading(false);
@@ -48,7 +48,7 @@ export const SingleEventPage = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center pt-20">
         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#006297]"></div>
       </div>
     );
@@ -56,7 +56,7 @@ export const SingleEventPage = () => {
 
   if (!event) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center pt-20">
         <div className="text-center">
           <h1 className="text-2xl font-bold text-gray-900 mb-2">Event Not Found</h1>
           <p className="text-gray-600">The event you're looking for doesn't exist.</p>
@@ -66,7 +66,7 @@ export const SingleEventPage = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 pt-20">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         {event.image && (
           <img

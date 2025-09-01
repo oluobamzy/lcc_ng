@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { collection, query, where, getDocs } from 'firebase/firestore';
 import { db } from '../lib/firebase';
@@ -23,12 +23,12 @@ export const SinglePostPage = () => {
 
       const querySnapshot = await getDocs(q);
       if (!querySnapshot.empty) {
-        const postData = querySnapshot.docs[0].data() as Post;
+        const postData = querySnapshot.docs[0].data() as any;
         setPost({
           ...postData,
           id: querySnapshot.docs[0].id,
-          createdAt: postData.createdAt.toDate(),
-          updatedAt: postData.updatedAt.toDate(),
+          createdAt: postData.createdAt?.toDate ? postData.createdAt.toDate() : postData.createdAt,
+          updatedAt: postData.updatedAt?.toDate ? postData.updatedAt.toDate() : postData.updatedAt,
         });
       }
       setLoading(false);
@@ -39,7 +39,7 @@ export const SinglePostPage = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center pt-20">
         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#006297]"></div>
       </div>
     );
@@ -47,7 +47,7 @@ export const SinglePostPage = () => {
 
   if (!post) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center pt-20">
         <div className="text-center">
           <h1 className="text-2xl font-bold text-gray-900 mb-2">Post Not Found</h1>
           <p className="text-gray-600">The post you're looking for doesn't exist.</p>
@@ -57,7 +57,7 @@ export const SinglePostPage = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 pt-20">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         {post.featuredImage && (
           <img

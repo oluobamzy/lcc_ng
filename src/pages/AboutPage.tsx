@@ -6,7 +6,7 @@ export const AboutPage = () => {
   const [showMap, setShowMap] = useState(false);
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 pt-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <h1 className="text-4xl font-bold text-[#006297] mb-8">About Us</h1>
         {/* <Home className="w-8 h-8 text-[#006297]" /> */}
@@ -15,9 +15,8 @@ export const AboutPage = () => {
           <div>
             <h2 className="text-3xl font-semibold mb-4">Our Mission</h2>
             <p className="text-gray-600 mb-6">
-              At Lifestream Christian Center, we are committed to sharing God's love,
-              building a strong community of believers, and making a positive impact
-              in our world through faith, fellowship, and service.
+              Our mission is to bring men and women to the saving knowledge of Christ and the membership of the local church.
+              Raising churches in every tribe, language, and nations Ultimately Raising Disciples for our our Lord Jesus
             </p>
             <div className="grid grid-cols-2 gap-4">
               <div className="flex items-center space-x-2 text-[#006297]">
@@ -51,22 +50,19 @@ export const AboutPage = () => {
           <div className="bg-white p-6 rounded-lg shadow-md">
             <h3 className="text-xl font-semibold text-[#006297] mb-4">Our Vision</h3>
             <p className="text-gray-600">
-              To be a beacon of hope and transformation, reaching people with God's
-              love and empowering them to live purposeful lives.
+              To be a beacon of hope and transformation, reaching people with God's love and helping them become uncompromising and devoted followers of Christ. 
             </p>
           </div>
           <div className="bg-white p-6 rounded-lg shadow-md">
             <h3 className="text-xl font-semibold text-[#006297] mb-4">Our Values</h3>
             <p className="text-gray-600">
-              We value authentic worship, biblical teaching, meaningful relationships,
-              and compassionate service to others.
+              We value an atmosphere of faith, love, excellence, purpose, and accountability.
             </p>
           </div>
           <div className="bg-white p-6 rounded-lg shadow-md">
             <h3 className="text-xl font-semibold text-[#006297] mb-4">Our Community</h3>
             <p className="text-gray-600">
-              We are a diverse family of believers united in our love for God and
-              commitment to serving our community.
+              We are a diverse family of believers, united by our love for God and dedicated to serving Him and making a positive impact in our community. 
             </p>
           </div>
         </div>

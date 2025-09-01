@@ -22,6 +22,26 @@ export interface MediaFile {
   uploadedAt: Date;
 }
 
+export interface TeamMember {
+  id: string;
+  name: string;
+  position: string;
+  bio: string;
+  imageUrl: string;
+  email?: string;
+  phone?: string;
+  socialMedia: {
+    facebook?: string;
+    instagram?: string;
+    twitter?: string;
+    linkedin?: string;
+  };
+  order: number;
+  active: boolean;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
 export interface SiteSettings {
   churchName: string;
   address: string;
