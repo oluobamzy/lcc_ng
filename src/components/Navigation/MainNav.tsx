@@ -35,8 +35,8 @@ export function MainNav() {
   return (
     <motion.nav 
       className={`fixed top-0 w-full z-50 transition-all duration-300 ${
-        scrolled ? 'bg-[#006297]/95 backdrop-blur-sm shadow-lg' : 'bg-[#006297]'
-      } text-white`}
+        scrolled ? 'bg-black/20 backdrop-blur-md shadow-lg' : 'bg-transparent'
+      } text-gray-800`}
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ type: "spring", stiffness: 100, damping: 20 }}
@@ -66,8 +66,8 @@ export function MainNav() {
                 className={({ isActive }) => `
                   px-4 py-2 rounded-lg font-medium transition-all duration-200 flex items-center space-x-1.5
                   ${isActive 
-                    ? 'text-[#BAD975] bg-white/10' 
-                    : 'hover:text-[#BAD975] hover:bg-white/5'
+                    ? 'text-[#BAD975] bg-[#BAD975]/10' 
+                    : 'hover:text-[#BAD975] hover:bg-[#BAD975]/5'
                   }
                 `}
               >
@@ -91,7 +91,7 @@ export function MainNav() {
 
           {/* Mobile Menu Button */}
           <motion.button
-            className="md:hidden p-2 rounded-lg hover:bg-white/10 transition-colors"
+            className="md:hidden p-2 rounded-lg hover:bg-[#BAD975]/10 transition-colors"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             whileTap={{ scale: 0.9 }}
           >
@@ -103,14 +103,14 @@ export function MainNav() {
         <AnimatePresence>
           {isMobileMenuOpen && (
             <motion.div
-              className="md:hidden"
+              className="md:hidden bg-[#006297] rounded-lg mx-4 mb-4"
               initial={{ height: 0, opacity: 0 }}
               animate={{ height: 'auto', opacity: 1 }}
               exit={{ height: 0, opacity: 0 }}
               transition={{ duration: 0.3 }}
             >
               <motion.div 
-                className="flex flex-col space-y-3 mt-4 pb-4"
+                className="flex flex-col space-y-3 mt-4 pb-4 px-4"
                 initial="hidden"
                 animate="visible"
                 variants={{
@@ -134,10 +134,10 @@ export function MainNav() {
                     <RouterLink
                       to={path}
                       className={({ isActive }) => `
-                        flex items-center space-x-3 px-4 py-3 rounded-lg font-medium transition-all duration-200
+                        flex items-center space-x-3 px-4 py-3 rounded-lg font-medium transition-all duration-200 text-white
                         ${isActive 
                           ? 'text-[#BAD975] bg-white/10' 
-                          : 'hover:text-[#BAD975] hover:bg-white/5'
+                          : 'hover:text-[#BAD975] hover:bg-white/10'
                         }
                       `}
                       onClick={() => setIsMobileMenuOpen(false)} // Close menu on link click
