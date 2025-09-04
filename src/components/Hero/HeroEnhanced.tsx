@@ -124,7 +124,7 @@ export function HeroEnhanced({ onJoinUsClick, onExploreClick }: HeroProps) {
               variants={itemVariants}
               className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6"
             >
-              Experience Worship Word and Faith <br />
+              Experience Worship, Word and Faith <br />
               <span className="text-[#BAD975] relative">
                 Like Never Before
                 <motion.span 
